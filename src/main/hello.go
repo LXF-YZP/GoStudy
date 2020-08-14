@@ -168,7 +168,24 @@ func main() {
 	sl3 = append(sl3, 4, 5, 6)
 	fmt.Println(sl3)
 
+	//键盘输入
+
+	fmt.Println("Please enter your full name: ")
+	fmt.Scanln(&firstName, &lastName)
+	// fmt.Scanf("%s %s", &firstName, &lastName)
+	fmt.Printf("Hi %s %s!\n", firstName, lastName) // Hi Chris Naegels
+	fmt.Sscanf(input, format, &f, &i, &s)
+	fmt.Println("From the string we read: ", f, i, s)
+	// 输出结果: From the string we read: 56.12 5212 Go
 }
+
+var (
+	firstName, lastName, s string
+	i                      int
+	f                      float32
+	input                  = "56.12 / 5212 / Go"
+	format                 = "%f / %d / %s"
+)
 
 func ssum(a *[3]float64) (sum float64) {
 	for _, v := range a { // derefencing *a to get back to the array is not necessary!
