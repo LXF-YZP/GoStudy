@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bufio"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"time"
@@ -9,6 +12,53 @@ import (
 
 //os.Args demo
 func main() {
+
+	x1 := 1
+	y1 := 2
+	defer calc("A", x1, calc("B", x1, y1))
+	x1 = 3
+	defer calc("C", x1, calc("D", x1, y1))
+	y1 = 4
+
+	var res01 result
+	res01.Code = 200
+	res01.Message = "success"
+
+	//序列化
+	jsons, errs := json.Marshal(res01)
+	if errs != nil {
+		fmt.Println("json marshal error:", errs)
+	}
+	fmt.Println("json data :", string(jsons))
+
+	//反序列化
+	var res2 result
+	errs = json.Unmarshal(jsons, &res2)
+	if errs != nil {
+		fmt.Println("json unmarshal error:", errs)
+	}
+	fmt.Println("res2 :", res2)
+
+	var sli5 []int = make([]int, 5, 8)
+	fmt.Printf("len=%d cap=%d slice=%v\n", len(sli5), cap(sli5), sli5)
+	var arr = [5]int{1, 2, 3, 4, 5}
+	modifyArr(arr)
+	// fmt.Println(arr)
+
+	const name001 = "Tom0"
+	fmt.Println(name001)
+
+	const age = 30
+	fmt.Println(age)
+
+	const name1, name2 = "Tom", "Jay"
+	fmt.Println(name1, name2)
+
+	const name3, age1 = "Tom", 30
+	fmt.Println(name3, age1)
+
+	arr5 := [5]int{0: 3, 1: 5, 4: 6}
+	fmt.Println(arr5)
 
 	//os.Args是一个[]string
 	if len(os.Args) > 0 {
@@ -157,26 +207,74 @@ func main() {
 		fmt.Printf("Slice at %d is %d\n", i, slice1[i])
 	}
 
-	sl_from := []int{1, 2, 3}
-	sl_to := make([]int, 10)
+	// sl_from := []int{1, 2, 3}
+	// sl_to := make([]int, 10)
 
-	n := copy(sl_to, sl_from)
-	fmt.Println(sl_to)
-	fmt.Printf("Copied %d elements\n", n) // n == 3
+	// n := copy(sl_to, sl_from)
+	// fmt.Println(sl_to)
+	// fmt.Printf("Copied %d elements\n", n) // n == 3
 
 	sl3 := []int{1, 2, 3}
 	sl3 = append(sl3, 4, 5, 6)
 	fmt.Println(sl3)
 
+	var mhg int = 123
+	var ohm *int = &mhg
+	fmt.Println(ohm)
+	var mystr string = "Hello!"
+	println(&mystr)
+	var mystrP *string = &mystr
+	ohmy := &mystr
+	fmt.Println(ohmy)
+	fmt.Println(mystrP)
+	fmt.Println(*mystrP)
+
 	//键盘输入
 
-	fmt.Println("Please enter your full name: ")
-	fmt.Scanln(&firstName, &lastName)
-	// fmt.Scanf("%s %s", &firstName, &lastName)
-	fmt.Printf("Hi %s %s!\n", firstName, lastName) // Hi Chris Naegels
-	fmt.Sscanf(input, format, &f, &i, &s)
-	fmt.Println("From the string we read: ", f, i, s)
-	// 输出结果: From the string we read: 56.12 5212 Go
+	// fmt.Println("Please enter your full name: ")
+	// fmt.Scanln(&firstName, &lastName)
+	// // fmt.Scanf("%s %s", &firstName, &lastName)
+	// fmt.Printf("Hi %s %s!\n", firstName, lastName) // Hi Chris Naegels
+	// fmt.Sscanf(input, format, &f, &i, &s)
+	// fmt.Println("From the string we read: ", f, i, s)
+	// // 输出结果: From the string we read: 56.12 5212 Go
+
+	inputFile, inputError := os.Open("./src/main/world.go")
+	if inputError != nil {
+		fmt.Printf("An error occurred on opening the inputfile\n" +
+			"Does the file exist?\n" +
+			"Have you got acces to it?\n")
+		return // exit the function on error
+	}
+	defer inputFile.Close()
+
+	inputReader := bufio.NewReader(inputFile)
+	for {
+		inputString, readerError := inputReader.ReadString('\n')
+		fmt.Printf("The input was: %s", inputString)
+		if readerError == io.EOF {
+			return
+		}
+	}
+
+}
+
+func calc(index string, a, b int) int {
+	ret := a + b
+	fmt.Println(index, a, b, ret)
+	return ret
+}
+
+type result struct {
+	Code    int
+	Message string
+}
+
+// `json:"code"`    `json:"msg"`
+
+func modifyArr(a [5]int) {
+	a[1] = 20
+	fmt.Println(a)
 }
 
 var (

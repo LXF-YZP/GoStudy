@@ -5,6 +5,27 @@ import (
 	"time"
 )
 
+func main() {
+	timeDemo2()
+	c()
+	a()
+}
+
+func a() {
+	i := 0
+	defer fmt.Println(0) //因为i=0，所以此时就明确告诉golang在程序退出时，执行输出0的操作
+	i++
+	return
+}
+
+func c() (i int) {
+	defer func() {
+		i++
+		println(i)
+	}()
+	return 1
+}
+
 func timeDemo2() {
 	now := time.Now() //获取当前时间
 	fmt.Printf("current time:%v\n", now)
