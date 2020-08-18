@@ -5,6 +5,19 @@ import (
 	"time"
 )
 
+//全局变量，init函数和main函数执行顺序依次是全局变量--init函数--main函数
+var age = test()
+
+func test() int {
+
+	fmt.Println("我被赋值给全局变量了")
+	return 29
+}
+
+func init() {
+	fmt.Println("我是inti函数，一般执行初始化的操作")
+}
+
 func main() {
 	timeDemo2()
 	c()
