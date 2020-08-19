@@ -34,6 +34,23 @@ func main() {
 
 	dd := map[int]string{}
 	fmt.Printf("cc=%T\n", dd)
+	dd[5] = "haha"
+	//修改map中的元素
+	dd[5] = "hehe"
+	dd[6] = "heng"
+	dd[7] = "ha"
+	fmt.Println(dd)
+	//删除map中的元素
+	delete(dd, 7)
+	fmt.Println(dd)
+	//map中的查找操作
+	ff, ok := dd[7]
+	fmt.Println(ok)
+	fmt.Println(ff)
+	fmt.Println(len(dd))
+	for k, v := range dd {
+		fmt.Printf("k=%v ,v=%v\n", k, v)
+	}
 
 	println(name)
 	timeDemo2()
@@ -84,6 +101,40 @@ func main() {
 
 	}
 
+	//1.结构体声明
+	var stu student
+	stu.age = 29
+	stu.sex = "男"
+	fmt.Println(stu)
+
+	//2.结构体声明
+	// var stu2 student = student{29, "男"}
+	var stu2 student = student{}
+	stu2.age = 26
+	stu2.sex = "男"
+	fmt.Println(stu2)
+	stu2.age = 28
+	fmt.Println(stu2)
+
+	//3.结构体声明
+	var stu3 *student = new(student)
+	stu3.age = 30 //底层会自动加上*，变成*stu3
+	(*stu3).sex = "男"
+	fmt.Println(stu3)
+	fmt.Println(*stu3)
+
+	//4.结构体声明
+	// var stu4 *student = &student{}
+	var stu4 *student = &student{30, "男"}
+	// (*stu4).age = 30
+	// stu4.sex = "男"
+	fmt.Println(stu4)
+	fmt.Println(*stu4)
+}
+
+type student struct {
+	age int
+	sex string
 }
 
 type circle struct {
