@@ -18,7 +18,24 @@ func init() {
 	fmt.Println("我是inti函数，一般执行初始化的操作")
 }
 
+//短写法必须用在方法内  不是全局变量
+// name := "hello"
+var name string = "name"
+
 func main() {
+
+	//map的定义
+	var aa map[int]string
+	aa = make(map[int]string)
+	fmt.Printf("aa=%T\n", aa)
+
+	bb := make(map[int]string)
+	fmt.Printf("bb=%T\n", bb)
+
+	dd := map[int]string{}
+	fmt.Printf("cc=%T\n", dd)
+
+	println(name)
 	timeDemo2()
 	c()
 	a()
@@ -67,6 +84,33 @@ func main() {
 
 	}
 
+}
+
+type circle struct {
+	radius float64
+}
+
+//该 method 属于 Circle 类型对象中的方法
+func (c circle) getArea() float64 {
+	//c.radius 即为 Circle 类型对象中的属性
+	return 3.14 * c.radius * c.radius
+}
+
+func add(int) int {
+
+	return 10
+}
+
+func namedRetValues() (a, b int) {
+	a = 1
+	b = 2
+	return
+	// return a, b
+}
+
+func namedRetValus() (int, int) {
+
+	return 1, 2
 }
 
 func a() {
