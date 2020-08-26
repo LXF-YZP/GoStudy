@@ -7,6 +7,8 @@ import (
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/goinggo/mapstructure"
 )
 
 func main() {
@@ -186,11 +188,55 @@ func main() {
 	aa := T.Unix()
 	fmt.Println(aa)
 
-	// timeTpl := "2006-01-02 15:04:05"
-	// fmt.Println(time.Now.Unix().Format(timeTpl))
-	// t := "2001-01-02 13:09:21"
-	// time.Parse(timeTpl, t)
+	//json转map
+	// jstring := `{"id":1,"name":"zhang"}`
+	// jMap := make(map[string]interface{})
+	// _ = json.Unmarshal([]byte(jstring), &jMap)
+	// fmt.Println(jMap)
 
+	//json转struct
+	jstring := `{"id":1,"name":"zhang"}`
+	jStruct := User{}
+	_ = json.Unmarshal([]byte(jstring), &jStruct)
+	fmt.Println(jStruct.Id)
+
+	//map转json
+	// map1 := map[string]string{"id": "张三", "name": "李四"}
+	// sMap, _ := json.Marshal(map1)
+	// fmt.Println(string(sMap))
+
+	//struct转json
+	map1 := map[string]string{"id": "张三", "name": "李四"}
+	sMap, _ := json.Marshal(map1)
+	fmt.Println(string(sMap))
+
+	//map转struct
+	map2 := map[string]interface{}{"Id": 12, "Name": "李四"}
+	user2 := User{}
+	_ = mapstructure.Decode(map2, &user2)
+	fmt.Println(user2.Id)
+
+	//struct转map
+	user1 := User{Id: 1, Name: "王二"}
+	map3 := Struct2Map(user1)
+	fmt.Println(map3)
+
+}
+
+func Struct2Map(obj interface{}) map[string]interface{} {
+	t := reflect.TypeOf(obj)
+	v := reflect.ValueOf(obj)
+
+	var data = make(map[string]interface{})
+	for i := 0; i < t.NumField(); i++ {
+		data[t.Field(i).Name] = v.Field(i).Interface()
+	}
+	return data
+}
+
+type User struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
 }
 
 type Student struct {
