@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"reflect"
 	"strings"
 	"time"
 )
@@ -145,6 +146,57 @@ func main() {
 	v[1] = 18 // ok
 	fmt.Println(v)
 
+	//反射测试
+	st := Student{"Titan", 14, 102}
+	fmt.Println(reflect.TypeOf(st).Field(0).Tag)
+	fmt.Println(reflect.TypeOf(st).Field(1).Tag)
+	fmt.Println(reflect.TypeOf(st).Field(2).Tag)
+
+	//获取当前时间戳
+	fmt.Println(time.Now().Unix())
+
+	//时间戳转时间
+	timestamp := 1598425210
+	ta := time.Unix(int64(timestamp), 1).Format("2006-01-02 15:04:05")
+	fmt.Println(ta) //2020-08-26 15:00:10
+
+	// 获取时间，该时间带有时区等信息，获取的为当前地区所用时区的时间
+	timeNow := time.Now()
+	// 获取时间戳
+	unix := time.Now().Unix()
+	// 获取UTC时区的时间
+	utcTime := time.Now().UTC()
+	// go语言固定日期模版
+	timeLayout := "2006-01-02 15:04:05"
+	// time.Unix的第二个参数传递0或10结果一样，因为都不大于1e9
+	timeStr := time.Unix(unix, 0).Format(timeLayout)
+	fmt.Println(timeNow, unix, utcTime, timeStr)
+	// 获取年月日，其中month为string，也就是英文的月份
+	year, month, day := time.Now().Date()
+	fmt.Printf("year is %+v, month is %+v, day is %+v \n", year, month, day)
+
+	// string转化为时间，layout必须为 "2006-01-02 15:04:05"
+	times, _ := time.Parse(timeLayout, "2014-06-15 08:37:18")
+	timeUnix := times.Unix()
+	fmt.Printf("times is %+v, timeUnix is %+v\n", times, timeUnix)
+
+	//时间转时间戳
+	t := "2018-01-02 01:02:03"
+	T, _ := time.Parse("2006-01-02 15:04:05", t)
+	aa := T.Unix()
+	fmt.Println(aa)
+
+	// timeTpl := "2006-01-02 15:04:05"
+	// fmt.Println(time.Now.Unix().Format(timeTpl))
+	// t := "2001-01-02 13:09:21"
+	// time.Parse(timeTpl, t)
+
+}
+
+type Student struct {
+	name string "学生名字"          // 结构体标签
+	Age  int    "学生年龄"          // 结构体标签
+	Room int    `json:"Roomid"` // 结构体标签
 }
 
 //var mySlice []int=myArray[first:last]
