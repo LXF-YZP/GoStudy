@@ -97,8 +97,57 @@ func main() {
 
 	//go语言中字符类型
 
+	var myArray [5]int = [5]int{1, 2, 3, 4, 5}
+
+	fmt.Printf("myArray=%v, myArray=%T\n", myArray, myArray)
+	slice01 := myArray[:]
+	fmt.Printf("slice01=%v, slice01=%T\n", slice01, slice01)
+
+	slice02 := []int{1, 2, 3, 4, 5, 6}
+	fmt.Printf("slice02=%v, slice02=%T\n", slice02, slice02)
+
+	slice03 := [6]int{1, 2, 3, 4, 5, 6}
+	fmt.Printf("slice03=%v, slice03=%T\n", slice03, slice03)
+
+	var mySlice []int = myArray[:]
+
+	fmt.Printf("mySlice=%v, mySlice=%T\n", mySlice, mySlice)
+
+	var mySlice01 []int = []int{1, 2, 3}
+	fmt.Printf("mySlice01=%v, mySlice01=%T\n", mySlice01, mySlice01)
+
+	newSlice := append(mySlice01, 1, 2, 3) //直接将元素加进去，若存储空间不够会按上述方式扩容。
+	fmt.Printf("newSlice=%v, newSlice=%T\n", newSlice, newSlice)
+	newSlice1 := append(newSlice, mySlice01...) //将oldSlice2的元素打散后加到oldSlice1中，三个点不可省略。
+	fmt.Printf("newSlice1=%v, newSlice1=%T\n", newSlice1, newSlice1)
+
+	slice1 := []int{1, 2, 3, 4, 5}
+	slice2 := []int{6, 7, 8}
+	// copy(slice2, slice1) //只会复制slice1的前三个元素到slice2中
+	copy(slice1, slice2) //只会复制slice2的三个元素到slice1中的前三个位置
+	// fmt.Printf("slice1=%v, slice1=%T\n", slice1, slice1)
+	fmt.Printf("slice2=%v, slice2=%T\n", slice2, slice2)
+
+	//new 和make区别
+	p := new([]int) //p == nil; with len and cap 0
+	fmt.Println(p)
+
+	v := make([]int, 10, 50) // v is initialed with len 10, cap 50
+	fmt.Println(v)
+
+	/*********Output****************
+	    &[]
+	    [0 0 0 0 0 0 0 0 0 0]
+	*********************************/
+
+	// (*p)[0] = 18 // panic: runtime error: index out of range
+	// because p is a nil pointer, with len and cap 0
+	v[1] = 18 // ok
+	fmt.Println(v)
+
 }
 
+//var mySlice []int=myArray[first:last]
 const (
 	Sunday = iota //Sunday==0,以此类推
 	Monday
