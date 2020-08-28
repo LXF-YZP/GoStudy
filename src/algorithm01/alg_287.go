@@ -25,6 +25,13 @@ func findDuplicate(nums []int) int {
 	// }
 	// return 0
 
-	//方法二 双指针
+	//方法二 排序
+	// sort.Ints(nums)
+	// for i := 1; i < len(nums); i++ {
+	// 	if nums[i] == nums[i-1] {
+	// 		return nums[i]
+	// 	}
+	// }
+	// return -1
 
 }
