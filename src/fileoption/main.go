@@ -22,8 +22,7 @@ func main() {
 	if err != nil {
 		fmt.Println("关闭文件有问题")
 	}
-	//iostat -x 3
-	//sar -n DEV 3
+
 	var tt T
 	fmt.Println(tt.A)
 	fmt.Println(tt.B)
@@ -221,6 +220,32 @@ func main() {
 	map3 := Struct2Map(user1)
 	fmt.Println(map3)
 
+	//报错
+	// ccc := []int{}
+	// ccc[0] = 1
+
+	//报错
+	// var ccc = []int{}
+	// ccc[0] = 1
+
+	//报错
+	// var ccc []int
+	// ccc[0] = 1
+	// fmt.Println(ccc)
+
+	// ccc := []int{2, 2, 3}
+	// ccc[0] = 1
+	// fmt.Println(ccc)
+
+	// ccc := []int{}
+	// ccc = make([]int, 5, 5)
+	// ccc[0] = 10
+	// fmt.Println(ccc)
+
+	result := []int{}
+	result = append(result, 4)
+	fmt.Println(result)
+
 }
 
 func Struct2Map(obj interface{}) map[string]interface{} {
@@ -234,6 +259,7 @@ func Struct2Map(obj interface{}) map[string]interface{} {
 	return data
 }
 
+//user结构体
 type User struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
