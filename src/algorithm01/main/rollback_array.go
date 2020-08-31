@@ -8,7 +8,9 @@ func main() {
 	fmt.Println(int2)
 	int3 := rollbackArray(int2)
 	fmt.Println(int3)
+
 }
+
 func rollbackArray(nums []int) []int {
 	var i, j = 0, len(nums) - 1
 	for i < j {
