@@ -8,6 +8,7 @@ package algorithm01
 // 题目解析:输入只有一个字符串，要求子串里面不能够有重复的元素，这里 count 都不需要定义，直接判断哈希散列里面的元素是不是在窗口内即可，是的话得移动左指针去重。
 
 func lengthOfLongestSubstring(s string) int {
+
 	var n = len(s)
 	var ans = 0
 	//创建map窗口,i为左区间，j为右区间，右边界移动
@@ -29,28 +30,28 @@ func lengthOfLongestSubstring(s string) int {
 		map1[s[j]] = j + 1
 	}
 	return ans
-
-	// // 哈希集合，记录每个字符是否出现过
-	// m := map[byte]int{}
-	// n := len(s)
-	// // 右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动
-	// rk, ans := -1, 0
-	// for i := 0; i < n; i++ {
-	// 	if i != 0 {
-	// 		// 左指针向右移动一格，移除一个字符
-	// 		delete(m, s[i-1])
-	// 	}
-	// 	for rk + 1 < n && m[s[rk+1]] == 0 {
-	// 		// 不断地移动右指针
-	// 		m[s[rk+1]]++
-	// 		rk++
-	// 	}
-	// 	// 第 i 到 rk 个字符是一个极长的无重复字符子串
-	// 	ans = max(ans, rk - i + 1)
-	// }
-	// return ans
-
 }
+
+// // 哈希集合，记录每个字符是否出现过
+// m := map[byte]int{}
+// n := len(s)
+// // 右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动
+// rk, ans := -1, 0
+// for i := 0; i < n; i++ {
+// 	if i != 0 {
+// 		// 左指针向右移动一格，移除一个字符
+// 		delete(m, s[i-1])
+// 	}
+// 	for rk + 1 < n && m[s[rk+1]] == 0 {
+// 		// 不断地移动右指针
+// 		m[s[rk+1]]++
+// 		rk++
+// 	}
+// 	// 第 i 到 rk 个字符是一个极长的无重复字符子串
+// 	ans = max(ans, rk - i + 1)
+// }
+// return ans
+
 func max(x, y int) int {
 	if x < y {
 		return y
@@ -101,4 +102,27 @@ func max(x, y int) int {
 //             map.put(s.charAt(j), j+1);
 //         }
 //         return ans;
+// }
+
+// 核心：只增大不减小的滑动窗口
+// 定义两个游标start和end，遍历字符串，end游标随着遍历无重复增大
+// 若出现重复字符，则两个游标都增大index+1位（窗口大小不变，start游标滑动到重复位置后一位）
+// 这时候由于窗口大小不变，窗口内可能存在重复，恰好遍历从start游标开始，如果没有重复，需要判断i+1与end的关系，超过的话，即i遍历到窗口之外，end再增大
+// 遍历结束，end-start即为结果。
+// 代码
+
+// func lengthOfLongestSubstring(s string) int {
+//     start,end := 0,0
+//     for i := 0; i < len(s); i++ {
+//         index := strings.Index(s[start:i],string(s[i]))
+//         if index==-1{
+//             if i+1>end{
+//                 end=i+1
+//             }
+//         }else{
+//                 start+=index+1
+//                 end+=index+1
+//             }
+//     }
+//     return end-start
 // }
