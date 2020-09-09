@@ -13,8 +13,8 @@ func lengthOfLongestSubstring(s string) int {
 	var ans = 0
 	//创建map窗口,i为左区间，j为右区间，右边界移动
 	map1 := make(map[byte]int, 0)
-	j := 0
 	i := 0
+	j := 0
 	for ; j < n; j++ {
 		// 如果窗口中包含当前字符，
 		// (map.containsKey(s.charAt(j)))

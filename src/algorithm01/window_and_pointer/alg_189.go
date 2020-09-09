@@ -31,7 +31,7 @@ func rotate(nums []int, k int) {
 
 	// var i = len(nums)
 	// k = k % len(nums)//k有可能会大于数组长度
-	// copy(nums, append(nums[i-k:], nums[0:i-k]...))
+	// copy(nums, append(nums[i-k:], nums[0:i-k]..s.))
 
 	//方法二只需要反转全部元素，然后再反转前K个元素，再反转后面的l-k个元素
 	//原来[1,2,3,4,5,6,7]  int = 3

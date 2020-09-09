@@ -9,6 +9,40 @@ import "math"
 // 解释：子数组 [4,3] 是该条件下的长度最小的子数组。
 // 进阶：
 // 如果你已经完成了 O(n) 时间复杂度的解法, 请尝试 O(n log n) 时间复杂度的解法。
+
+//暴力法
+func minSubArrayLen01(s int, nums []int) int {
+	if nums == nil || len(nums) == 0 {
+		return 0
+	}
+	count := 0
+	for i := 0; i < len(nums)-1; i++ {
+		sum := nums[i]
+		c := 1
+		for j := i + 1; j < len(nums) && sum < s; j++ {
+			if sum < s {
+				sum += nums[j]
+				c++
+			}
+		}
+		if sum >= s {
+			if count == 0 {
+				count = c
+			} else {
+				count = min(c, count)
+			}
+
+		}
+	}
+	if count == 0 {
+		return 0
+	} else {
+		return count
+	}
+
+}
+
+//滑动窗口
 func minSubArrayLen(s int, nums []int) int {
 
 	n := len(nums)
